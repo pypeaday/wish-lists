@@ -2,7 +2,7 @@ from fastapi import FastAPI, Depends, HTTPException
 from sqlalchemy.orm import Session
 from typing import List
 from model import Wishes
-from schema import wish_schema
+from schema import wish_schema, patch_schema
 from session import create_get_session
 
 app = FastAPI()
@@ -43,10 +43,11 @@ async def get_wish(id: int, db: Session = Depends(create_get_session)):
 
 @app.patch("/wishes/{id}", response_model=wish_schema, status_code=200)
 async def update_wish(
-    id: int, purchased: wish_schema, db: Session = Depends(create_get_session)
+    id: int, patch: patch_schema, db: Session = Depends(create_get_session)
 ):
     db_wish = db.query(Wishes).get(id)
-    db_wish.purchased = purchased
+    db_wish.purchased = patch.purchased
+    db_wish.purchased_by = patch.purchased_by
     db.commit()
     db.refresh(db_wish)
 

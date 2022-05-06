@@ -14,3 +14,12 @@ class wish_schema(BaseModel):
 
     class Config:
         orm_mode = True
+
+
+class patch_schema(BaseModel):
+
+    purchased: bool
+    purchased_by: Optional[str] = None
+
+    class Config:
+        orm_mode = True
