@@ -20,7 +20,6 @@ engine = create_engine(SQLALCHEMY_DATABASE_URL)
 #     st.dataframe(df)
 
 df = pd.read_sql_table("Wishes", engine)
-st.dataframe(df)
 
 with st.form("add item", clear_on_submit=True):
     st.write("Make an addition")
@@ -57,5 +56,8 @@ with st.form("add item", clear_on_submit=True):
 
     if submitted:
         s.to_sql("Wishes", engine, if_exists="append", index=False)
+        df = pd.read_sql_table("Wishes", engine)
 
 st.write("Outside the form")
+
+st.markdown(df.to_markdown())
