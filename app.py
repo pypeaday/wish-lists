@@ -1,8 +1,6 @@
 import pandas as pd
-from sqlalchemy import create_engine
 import streamlit as st
-
-import time
+from sqlalchemy import create_engine
 
 SQLALCHEMY_DATABASE_URL = "sqlite:///wishes.sqlite3"
 engine = create_engine(SQLALCHEMY_DATABASE_URL)
@@ -21,43 +19,63 @@ engine = create_engine(SQLALCHEMY_DATABASE_URL)
 
 df = pd.read_sql_table("Wishes", engine)
 
-with st.form("add item", clear_on_submit=True):
-    st.write("Make an addition")
+# options = {"Show me the lists": "lists", "I need to mark a wish as purchased": "mark"}
 
-    person = st.text_input("Whose wish?")
-    item = st.text_input("What item?")
-    link = st.text_input("Gimmie a link")
+# _page = st.sidebar.selectbox("Where do you want to go?", options.keys())
 
-    # Every form must have a submit button.
-    submitted = st.form_submit_button("Submit")
+# page = options[_page]
 
-    # s = pd.DataFrame.from_dict({
-    #     'person': person,
-    #     'item': item,
-    #     'link': link,
-    #     'purchased': False,
-    #     'purchased_by': None,
-    #     'date_added': time.strftime("%Y-%m-%d %H:%M:%S", time.localtime())
-    # }, orient="index")
-    s = pd.DataFrame.from_dict(
-        {
-            "row": [
-                person,
-                item,
-                link,
-                False,
-                None,
-                time.strftime("%Y-%m-%d %H:%M:%S", time.localtime()),
-            ]
-        },
-        orient="index",
-        columns=["person", "item", "link", "purchased", "purchased_by", "date_added"],
-    )
 
-    if submitted:
-        s.to_sql("Wishes", engine, if_exists="append", index=False)
-        df = pd.read_sql_table("Wishes", engine)
+# if page == "lists":
+#     with st.form("add item", clear_on_submit=True):
+#         st.write("Make an addition")
 
-st.write("Outside the form")
+#         person = st.text_input("Whose wish?")
+#         item = st.text_input("What item?")
+#         link = st.text_input("Gimmie a link")
+
+#         # Every form must have a submit button.
+#         submitted = st.form_submit_button("Submit")
+
+#         s = pd.DataFrame.from_dict(
+#             {
+#                 "row": [
+#                     person,
+#                     item,
+#                     link,
+#                     False,
+#                     None,
+#                     time.strftime("%Y-%m-%d %H:%M:%S", time.localtime()),
+#                 ]
+#             },
+#             orient="index",
+#             columns=[
+#                 "person",
+#                 "item",
+#                 "link",
+#                 "purchased",
+#                 "purchased_by",
+#                 "date_added",
+#             ],
+#         )
+
+#         if submitted:
+#             s.to_sql("Wishes", engine, if_exists="append", index=False)
+#             df = pd.read_sql_table("Wishes", engine)
+
+#     st.markdown(df.to_markdown())
+
+# elif page == "mark":
+#     with st.form ("Which item did you purchase?"):
+#         item = st.selectbox("Pick which wish",
+#         [(id, p, i) for id, p,i in zip(df.id, df.person, df.item)])
+
+#         # Every form must have a submit button.
+#         submitted = st.form_submit_button("Submit")
+#         if submitted:
+#             requests.patch(f"http://localhost:8000/wishes/{id}", data={"purchased": True})
+#     df = pd.read_sql_table("Wishes", engine)
 
 st.markdown(df.to_markdown())
+
+st.text(df.to_markdown())
