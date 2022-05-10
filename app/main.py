@@ -36,12 +36,8 @@ from fastapi import Depends, FastAPI, HTTPException
 from sqlalchemy.orm import Session
 
 
-app = FastAPI()
 
 
-@app.get("/")
-def read_root():
-    return {"message": "server is up!"}
 from app.model.model import Wishes
 from app.schema.schema import patch_schema, wish_schema
 from app.session.session import create_get_session
