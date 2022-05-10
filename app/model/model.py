@@ -1,6 +1,7 @@
-from database import Base
 from sqlalchemy.schema import Column
 from sqlalchemy.types import Boolean, Integer, String, Text
+
+from app.database.database import Base
 
 
 class Wishes(Base):
