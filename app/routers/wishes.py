@@ -29,26 +29,28 @@ templates = Jinja2Templates(directory="templates/")
 @router.get("/wishes", response_class=HTMLResponse)
 async def get_wishes(request: Request, db: Session = Depends(create_get_session)):
     data: List[wish_schema] = await api.read_wishes(db)
-    columns = [
-        "id",
-        "person",
-        "item",
-        "link",
-        "purchased",
-        "purchased_by",
-        "date_added",
-    ]
+    columns = {
+        "id": "key",
+        "person": "Name",
+        "item": "Wish",
+        "link": "Link",
+        "purchased": "Purchased",
+        "purchased_by": "Purchased By",
+        "date_added": "Date Added",
+    }
     rows = [
         [d.id, d.person, d.item, d.link, d.purchased, d.purchased_by, d.date_added]
         for d in data
     ]
 
-    df = pd.DataFrame.from_records(rows, columns=columns)
+    df = pd.DataFrame.from_records(rows, columns=columns.keys())
     return templates.TemplateResponse(
         "wish.html",
         {
             "request": request,
-            "data": df[columns].to_html(
+            "data": df[columns.keys()]
+            .rename(columns=columns)
+            .to_html(
                 index=False, classes=["table table-bordered table-dark table-hover"]
             ),
         },
