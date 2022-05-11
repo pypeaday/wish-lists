@@ -2,6 +2,7 @@ fastapi
 uvicorn
 sqlalchemy
 tabulate
+pandas
 
 requests==2.26.0
 fastapi==0.70.0
