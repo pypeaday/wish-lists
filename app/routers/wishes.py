@@ -1,6 +1,7 @@
 import json
 from typing import List
 
+import pandas as pd
 from fastapi import APIRouter, Depends, Request
 from fastapi.responses import HTMLResponse
 from fastapi.templating import Jinja2Templates
@@ -14,11 +15,40 @@ router = APIRouter()
 templates = Jinja2Templates(directory="templates/")
 
 
+# class Wishes(Base):
+#     __tablename__ = "Wishes"
+#     id = Column(Integer, primary_key=True, index=True)
+#     person = Column(String(20))
+#     item = Column(Text())
+#     link = Column(Text())
+#     purchased = Column(Boolean())
+#     purchased_by = Column(String(90))
+#     date_added = Column(String(15))
+
+
 @router.get("/wishes", response_class=HTMLResponse)
 async def get_wishes(request: Request, db: Session = Depends(create_get_session)):
     data: List[wish_schema] = await api.read_wishes(db)
-    print("data is:\n ", data)
-    return templates.TemplateResponse("wish.html", {"request": request, "data": data})
+    rows = [
+        [d.id, d.person, d.item, d.link, d.purchased, d.purchased_by, d.date_added]
+        for d in data
+    ]
+
+    df = pd.DataFrame.from_records(
+        rows,
+        columns=[
+            "id",
+            "person",
+            "item",
+            "link",
+            "purchased",
+            "purchased_by",
+            "date_added",
+        ],
+    )
+    return templates.TemplateResponse(
+        "wish.html", {"request": request, "data": df.to_html()}
+    )
 
 
 # @router.post("/wishes", response_class=HTMLResponse)
