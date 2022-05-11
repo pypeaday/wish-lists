@@ -9,7 +9,7 @@ class wish_schema(BaseModel):
     person: str
     item: str
     link: str
-    purchased: bool = False
+    purchased: str = "Not Yet"
     purchased_by: Optional[str] = None
     date_added: Optional[str] = time.strftime("%Y-%m-%d %H:%M:%S", time.localtime())
 
@@ -20,8 +20,8 @@ class wish_schema(BaseModel):
 class patch_schema(BaseModel):
 
     id: int
-    purchased: bool
-    purchased_by: Optional[str] = None
+    purchased: str
+    purchased_by: Optional[str] = "Albus Dumbledore"
 
     class Config:
         orm_mode = True
