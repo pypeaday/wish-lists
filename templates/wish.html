@@ -22,13 +22,14 @@ body {text-align: center;}
 Our wish list items can be found in the table below - if you purchase something (Thanks!) please mark it as "Purchased"
 <br>
 <br>
+
 <br>
 
-<form class="container" action="/wishes" method="post">
+<form class="container" action="/wishes" method="post" name="myForm">
   <div class="form-row">
     <div class="form-group col-md-6">
       <!-- <label for="inputName">Purchaser (Your Name)</label> -->
-      <input type="text" class="form-control" id="inputName" name="name" value="" placeholder="Purchaser (Your Name)">
+      <input type="text" class="form-control" id="inputName" name="person" value="" placeholder="Purchaser (Your Name)">
     </div>
     <div class="form-group col-md-4">
       <!-- <label for="inputWish">Wish</label> -->
@@ -74,3 +75,4 @@ Trying to put something here
 
 
 {% endblock %}
+

@@ -63,10 +63,13 @@ async def get_wishes(request: Request, db: Session = Depends(create_get_session)
 
 @router.post("/wishes", response_class=HTMLResponse)
 async def form_chosen_item(
-    request: Request, db: Session = Depends(create_get_session), key: str = Form(...)
+    request: Request,
+    db: Session = Depends(create_get_session),
+    key: str = Form(...),
+    person: str = Form(...),
 ):
-    patch = Wishes(id=key, purchased=True, purchased_by="Paco")
-    await api.update_wish(id=key, patch=patch, db=db)
+    patch = Wishes(id=key, purchased=True, purchased_by=person)
+    await api.update_wish(patch=patch, db=db)
 
     # do everything again
     data: List[wish_schema] = await api.read_wishes(db)
