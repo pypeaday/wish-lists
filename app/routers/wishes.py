@@ -70,7 +70,7 @@ async def form_update_wish_form(
     key: str = Form(...),
     person: str = Form(...),
 ):
-    patch = Wishes(id=key, purchased=True, purchased_by=person)
+    patch = Wishes(id=key, purchased="Yes", purchased_by=person)
     await api.update_wish(patch=patch, db=db)
 
     data: List[wish_schema] = await api.read_wishes(db)
