@@ -36,11 +36,9 @@ async def get_wish(id: int, db: Session = Depends(create_get_session)):
     return wish
 
 
-@router.patch("/api/wishes/{id}", response_model=wish_schema, status_code=200)
-async def update_wish(
-    id: int, patch: patch_schema, db: Session = Depends(create_get_session)
-):
-    db_wish = db.query(Wishes).get(id)
+@router.patch("/api/wishes/{patch.id}", response_model=wish_schema, status_code=200)
+async def update_wish(patch: patch_schema, db: Session = Depends(create_get_session)):
+    db_wish = db.query(Wishes).get(patch.id)
     db_wish.purchased = patch.purchased
     db_wish.purchased_by = patch.purchased_by
     db.commit()

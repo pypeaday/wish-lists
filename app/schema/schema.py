@@ -1,6 +1,7 @@
-from pydantic import BaseModel
 import time
 from typing import Optional
+
+from pydantic import BaseModel
 
 
 class wish_schema(BaseModel):
@@ -18,6 +19,7 @@ class wish_schema(BaseModel):
 
 class patch_schema(BaseModel):
 
+    id: int
     purchased: bool
     purchased_by: Optional[str] = None
 
