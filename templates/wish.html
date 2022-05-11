@@ -24,7 +24,7 @@ Our wish list items can be found in the table below - if you purchase something 
 <br>
 <br>
 
-<form class="container">
+<form class="container" action="/wishes" method="post">
   <div class="form-row">
     <div class="form-group col-md-6">
       <!-- <label for="inputName">Purchaser (Your Name)</label> -->
@@ -39,16 +39,18 @@ Our wish list items can be found in the table below - if you purchase something 
             {% endfor %}
       </select>
     </div>
-    <div class="col-auto"  action="/chosen_item" method="post" >
-      <button type="submit" class="btn btn-primary mb-2" name="item" value="#itemToMark">Submit</button>
+    <div class="col-auto" >
+        <button type="submit" class="btn btn-primary mb-2" name="inputWish" value="">
+          Submit
+      </button>
     </div>
   </div>
 </form>
 
 <br>
 
-{% if chosen_item %}
-<h1>{{ chosen_item }}</h1>
+{% if inputWish %}
+<h1>{{ inputWish }}</h1>
 Trying to put something here
 <br>
 {% endif %}
@@ -71,3 +73,4 @@ Trying to put something here
 
 
 {% endblock %}
+

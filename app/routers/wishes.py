@@ -7,7 +7,7 @@ from fastapi.templating import Jinja2Templates
 from sqlalchemy.orm import Session
 
 from app.api import api
-from app.schema.schema import wish_schema
+from app.schema.schema import patch_schema, wish_schema
 from app.session.session import create_get_session
 
 router = APIRouter()
@@ -43,6 +43,7 @@ async def get_wishes(request: Request, db: Session = Depends(create_get_session)
     ]
 
     df = pd.DataFrame.from_records(rows, columns=columns.keys())
+
     return templates.TemplateResponse(
         "wish.html",
         {
@@ -59,8 +60,28 @@ async def get_wishes(request: Request, db: Session = Depends(create_get_session)
     )
 
 
-@router.post("/chosen_item", response_class=HTMLResponse)
-def form_chosen_item(request: Request, item: str = Form(...)):
+@router.post("/wishes", response_class=HTMLResponse)
+async def form_chosen_item(request: Request, item: str = Form(...)):
+
+    await api.update_wish(id=None, patch={"purchased": True, "purchased_by": None})
+
+    # do everything again
+    data: List[wish_schema] = await api.read_wishes(db)
+    columns = {
+        "id": "key",
+        "person": "Name",
+        "item": "Wish",
+        "link": "Link",
+        "purchased": "Purchased",
+        "purchased_by": "Purchased By",
+        "date_added": "Date Added",
+    }
+    rows = [
+        [d.id, d.person, d.item, d.link, d.purchased, d.purchased_by, d.date_added]
+        for d in data
+    ]
+
+    df = pd.DataFrame.from_records(rows, columns=columns.keys())
     return templates.TemplateResponse(
         "wish.html",
         context={"request": request, "chosen_item": item},
