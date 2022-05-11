@@ -1,3 +1,4 @@
+import json
 from typing import List
 
 from fastapi import APIRouter, Depends, Request
@@ -14,8 +15,8 @@ templates = Jinja2Templates(directory="templates/")
 
 
 @router.get("/wishes", response_class=HTMLResponse)
-def get_wishes(request: Request, db: Session = Depends(create_get_session)):
-    data: List[wish_schema] = api.read_wishes(db)
+async def get_wishes(request: Request, db: Session = Depends(create_get_session)):
+    data: List[wish_schema] = await api.read_wishes(db)
     print("data is:\n ", data)
     return templates.TemplateResponse("wish.html", {"request": request, "data": data})
 
