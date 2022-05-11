@@ -9,7 +9,7 @@ from sqlalchemy.orm import Session
 
 from app.api import api
 from app.model.model import Wishes
-from app.schema.schema import patch_schema, wish_schema
+from app.schema.schema import wish_schema
 from app.session.session import create_get_session
 
 router = APIRouter()
