@@ -7,6 +7,7 @@ from fastapi.templating import Jinja2Templates
 from sqlalchemy.orm import Session
 
 from app.api import api
+from app.model.model import Wishes
 from app.schema.schema import patch_schema, wish_schema
 from app.session.session import create_get_session
 
@@ -61,9 +62,11 @@ async def get_wishes(request: Request, db: Session = Depends(create_get_session)
 
 
 @router.post("/wishes", response_class=HTMLResponse)
-async def form_chosen_item(request: Request, item: str = Form(...)):
-
-    await api.update_wish(id=None, patch={"purchased": True, "purchased_by": None})
+async def form_chosen_item(
+    request: Request, db: Session = Depends(create_get_session), key: str = Form(...)
+):
+    patch = Wishes(id=key, purchased=True, purchased_by="Paco")
+    await api.update_wish(id=key, patch=patch, db=db)
 
     # do everything again
     data: List[wish_schema] = await api.read_wishes(db)
@@ -84,7 +87,18 @@ async def form_chosen_item(request: Request, item: str = Form(...)):
     df = pd.DataFrame.from_records(rows, columns=columns.keys())
     return templates.TemplateResponse(
         "wish.html",
-        context={"request": request, "chosen_item": item},
+        context={
+            "request": request,
+            "chosen_item": "ITEM",
+            "data": {
+                "table": df[columns.keys()]
+                .rename(columns=columns)
+                .to_html(
+                    index=False, classes=["table table-bordered table-dark table-hover"]
+                ),
+                "data": data,
+            },
+        },
     )
 
 
