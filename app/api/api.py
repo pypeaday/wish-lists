@@ -23,8 +23,6 @@ async def add_wish(wish: wish_schema, db: Session = Depends(create_get_session))
         item=wish.item,
         link=wish.link,
         purchased=wish.purchased,
-        purchased_by=wish.purchased_by,
-        date_added=wish.date_added,
     )
     db.add(new_wish)
     db.commit()
