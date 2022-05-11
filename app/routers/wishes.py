@@ -1,8 +1,7 @@
-import json
 from typing import List
 
 import pandas as pd
-from fastapi import APIRouter, Depends, Request
+from fastapi import APIRouter, Depends, Form, Request
 from fastapi.responses import HTMLResponse
 from fastapi.templating import Jinja2Templates
 from sqlalchemy.orm import Session
@@ -57,6 +56,14 @@ async def get_wishes(request: Request, db: Session = Depends(create_get_session)
                 "wishes": (df.item.to_list()),
             },
         },
+    )
+
+
+@router.post("/chosen_item", response_class=HTMLResponse)
+def form_chosen_item(request: Request, item: str = Form(...)):
+    return templates.TemplateResponse(
+        "wish.html",
+        context={"request": request, "chosen_item": item},
     )
 
 

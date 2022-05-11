@@ -35,18 +35,19 @@ Our wish list items can be found in the table below - if you purchase something 
       <select id="inputWish" class="form-control">
         <option selected>Choose wish to mark as "purchased" <option>
             {% for item in data.wishes %}
-                <option value="{{ item }}">{{ item }}</option>
+                <option id="itemToMark" value="{{ item }}">{{ item }}</option>
             {% endfor %}
       </select>
     </div>
-    <div class="col-auto">
-      <button type="submit" class="btn btn-primary mb-2">Submit</button>
+    <div class="col-auto"  action="/chosen_item" method="post" >
+      <button type="submit" class="btn btn-primary mb-2" name="item" value="#itemToMark">Submit</button>
     </div>
   </div>
 </form>
 
 <br>
 
+<h1>{{ chosen_item }}<h1>
 
 <!-- Why don't I need a </body> -->
 
