@@ -11,7 +11,7 @@ router = APIRouter()
 
 
 @router.get("/api/wishes", response_model=List[wish_schema], status_code=200)
-async def read_wishes(db: Session = Depends(create_get_session)):
+async def read_wishes(db: Session = Depends(create_get_session)) -> List[wish_schema]:
     wishes = db.query(Wishes).all()
     return wishes
 
