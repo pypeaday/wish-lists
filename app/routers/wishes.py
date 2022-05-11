@@ -1,8 +1,9 @@
 from typing import List, Tuple
 
 import pandas as pd
+import starlette.status as status
 from fastapi import APIRouter, Depends, Form, Request
-from fastapi.responses import HTMLResponse
+from fastapi.responses import HTMLResponse, RedirectResponse
 from fastapi.templating import Jinja2Templates
 from sqlalchemy.orm import Session
 
@@ -88,21 +89,33 @@ async def form_update_wish_form(
     )
 
 
-# @router.post("/wishes", response_class=HTMLResponse)
-# def add_wish(wish: wish_schema, db: Session = Depends(create_get_session)):
-#     api.add_wish(
-#         wish=None,
-#         db=None,
-#     )
-#     new_wish = Wishes(
-#         person=wish.person,
-#         item=wish.item,
-#         link=wish.link,
-#         purchased=wish.purchased,
-#         purchased_by=wish.purchased_by,
-#         date_added=wish.date_added,
-#     )
-#     db.add(new_wish)
-#     db.commit()
+@router.get("/wishes/add", response_class=HTMLResponse)
+async def get_add_wishes(request: Request):
 
-#     return new_wish
+    return templates.TemplateResponse(
+        "add_wish.html",
+        {
+            "request": request,
+            "data": {},
+        },
+    )
+
+
+@router.post("/wishes/add", response_class=HTMLResponse)
+async def add_wish(
+    name: str = Form(...),
+    wish=Form(...),
+    link: str = Form(...),
+    db: Session = Depends(create_get_session),
+):
+    new_wish = Wishes(
+        person=name,
+        item=wish,
+        link=link,
+    )
+    await api.add_wish(
+        wish=new_wish,
+        db=db,
+    )
+
+    return RedirectResponse("/wishes", status_code=status.HTTP_302_FOUND)

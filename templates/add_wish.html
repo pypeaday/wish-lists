@@ -1,0 +1,70 @@
+{% extends "base.html" %}
+{% set active_page = "add_wishes" %}
+
+{% block title %}Add a Wish{% endblock %}
+{% block head %}
+{{ super() }}
+
+{% endblock %}
+
+{% block page_content %}
+{% include 'include/sidebar.html' %}
+
+<style>
+h1 {text-align: center;}
+body {text-align: center;}
+select {width:85%;}
+</style>
+
+<h1>Add a wish using the form!</h1>
+
+<body>
+
+<main role="main" class="container">
+
+<form method="post">
+<div class="input-group mb-3">
+  <label class="input-group-text" for="inputPerson">Who for?</label>
+  <select class="form-select" id="inputPerson" name="name">
+    <option hidden selected>Choose...</option>
+    <option value="Albus">Albus Dumbledore</option>
+    <option value="Dobby">Dobby the Elf</option>
+    <option value="Sirius">Sirius Black</option>
+    <option value="Hagrid">Hagrid</option>
+  </select>
+</div>
+
+<div class="input-group mb-3">
+  <label class="input-group-text" for="inputWish">Wish</label>
+  <input d="inputWish" type="text" name="wish" value="" required >
+</div>
+<div class="input-group mb-3">
+  <label class="input-group-text" for="inputWishLink">Link</label>
+  <input d="inputWishLink" type="text" name="link" value="" required >
+
+</div>
+
+<button type="submit" class="submit btn btn-primary btn-xl">Submit</button>
+</form>
+
+
+</main><!-- /.container -->
+
+<body>
+    <div class="footer">
+
+        <p>
+         <a href="http://localhost:8080/wishes">Wishes</a>
+        </p>
+
+    </div>
+</body>
+
+{% endblock %}
+
+{% block scripts %}
+{{ super() }}
+
+
+{% endblock %}
+
