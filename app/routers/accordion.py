@@ -9,9 +9,8 @@ templates = Jinja2Templates(directory="templates/")
 @router.get("/accordion", response_class=HTMLResponse)
 def get_accordion(request: Request):
     tag = "flower"
-    result = "Type a number"
     return templates.TemplateResponse(
-        "accordion.html", context={"request": request, "result": result, "tag": tag}
+        "accordion.html", context={"request": request, "tag": tag}
     )
 
 
