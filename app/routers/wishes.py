@@ -1,4 +1,4 @@
-from typing import List
+from typing import List, Tuple
 
 import pandas as pd
 from fastapi import APIRouter, Depends, Form, Request
@@ -14,47 +14,49 @@ from app.session.session import create_get_session
 router = APIRouter()
 templates = Jinja2Templates(directory="templates/")
 
+COLUMNS = {
+    "id": "key",
+    "person": "Name",
+    "item": "Wish",
+    "link": "Link",
+    "purchased": "Purchased",
+    "purchased_by": "Purchased By",
+    "date_added": "Date Added",
+}
 
-# class Wishes(Base):
-#     __tablename__ = "Wishes"
-#     id = Column(Integer, primary_key=True, index=True)
-#     person = Column(String(20))
-#     item = Column(Text())
-#     link = Column(Text())
-#     purchased = Column(Boolean())
-#     purchased_by = Column(String(90))
-#     date_added = Column(String(15))
 
+def _format_wishes(
+    data: List[wish_schema],
+) -> Tuple[List[wish_schema], pd.DataFrame, str]:
 
-@router.get("/wishes", response_class=HTMLResponse)
-async def get_wishes(request: Request, db: Session = Depends(create_get_session)):
-    data: List[wish_schema] = await api.read_wishes(db)
-    columns = {
-        "id": "key",
-        "person": "Name",
-        "item": "Wish",
-        "link": "Link",
-        "purchased": "Purchased",
-        "purchased_by": "Purchased By",
-        "date_added": "Date Added",
-    }
     rows = [
         [d.id, d.person, d.item, d.link, d.purchased, d.purchased_by, d.date_added]
         for d in data
     ]
 
-    df = pd.DataFrame.from_records(rows, columns=columns.keys())
+    df = pd.DataFrame.from_records(rows, columns=COLUMNS.keys())
+    table = (
+        df[COLUMNS.keys()]
+        .rename(columns=COLUMNS)
+        .to_html(index=False, classes=["table table-bordered table-dark table-hover"])
+    )
+
+    return df, table
+
+
+@router.get("/wishes", response_class=HTMLResponse)
+async def get_wishes(request: Request, db: Session = Depends(create_get_session)):
+
+    data: List[wish_schema] = await api.read_wishes(db)
+
+    _, table = _format_wishes(data)
 
     return templates.TemplateResponse(
         "wish.html",
         {
             "request": request,
             "data": {
-                "table": df[columns.keys()]
-                .rename(columns=columns)
-                .to_html(
-                    index=False, classes=["table table-bordered table-dark table-hover"]
-                ),
+                "table": table,
                 "data": data,
             },
         },
@@ -62,7 +64,7 @@ async def get_wishes(request: Request, db: Session = Depends(create_get_session)
 
 
 @router.post("/wishes", response_class=HTMLResponse)
-async def form_chosen_item(
+async def form_update_wish_form(
     request: Request,
     db: Session = Depends(create_get_session),
     key: str = Form(...),
@@ -71,34 +73,15 @@ async def form_chosen_item(
     patch = Wishes(id=key, purchased=True, purchased_by=person)
     await api.update_wish(patch=patch, db=db)
 
-    # do everything again
     data: List[wish_schema] = await api.read_wishes(db)
-    columns = {
-        "id": "key",
-        "person": "Name",
-        "item": "Wish",
-        "link": "Link",
-        "purchased": "Purchased",
-        "purchased_by": "Purchased By",
-        "date_added": "Date Added",
-    }
-    rows = [
-        [d.id, d.person, d.item, d.link, d.purchased, d.purchased_by, d.date_added]
-        for d in data
-    ]
 
-    df = pd.DataFrame.from_records(rows, columns=columns.keys())
+    _, table = _format_wishes(data)
     return templates.TemplateResponse(
         "wish.html",
         context={
             "request": request,
-            "chosen_item": "ITEM",
             "data": {
-                "table": df[columns.keys()]
-                .rename(columns=columns)
-                .to_html(
-                    index=False, classes=["table table-bordered table-dark table-hover"]
-                ),
+                "table": table,
                 "data": data,
             },
         },
