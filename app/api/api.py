@@ -18,10 +18,16 @@ async def read_wishes(db: Session = Depends(create_get_session)) -> List[wish_sc
 
 @router.post("/api/wishes", response_model=wish_schema, status_code=201)
 async def add_wish(wish: wish_schema, db: Session = Depends(create_get_session)):
-    db.add(wish)
+    new_wish = Wishes(
+        person=wish.person,
+        item=wish.item,
+        link=wish.link,
+        purchased=wish.purchased,
+    )
+    db.add(new_wish)
     db.commit()
 
-    return wish
+    return new_wish
 
 
 @router.get("/api/wishes/{id}", response_model=wish_schema, status_code=200)
