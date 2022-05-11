@@ -53,7 +53,7 @@ async def get_wishes(request: Request, db: Session = Depends(create_get_session)
                 .to_html(
                     index=False, classes=["table table-bordered table-dark table-hover"]
                 ),
-                "wishes": (df.item.to_list()),
+                "data": data,
             },
         },
     )

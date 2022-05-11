@@ -34,8 +34,8 @@ Our wish list items can be found in the table below - if you purchase something 
       <!-- <label for="inputWish">Wish</label> -->
       <select id="inputWish" class="form-control">
         <option selected>Choose wish to mark as "purchased" <option>
-            {% for item in data.wishes %}
-                <option id="itemToMark" value="{{ item }}">{{ item }}</option>
+            {% for item in data.data %}
+            <option id="{{ item.id }}" value="{{ item.id }}">{{ item.item }}</option>
             {% endfor %}
       </select>
     </div>
