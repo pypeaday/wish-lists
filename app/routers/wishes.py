@@ -48,11 +48,14 @@ async def get_wishes(request: Request, db: Session = Depends(create_get_session)
         "wish.html",
         {
             "request": request,
-            "data": df[columns.keys()]
-            .rename(columns=columns)
-            .to_html(
-                index=False, classes=["table table-bordered table-dark table-hover"]
-            ),
+            "data": {
+                "table": df[columns.keys()]
+                .rename(columns=columns)
+                .to_html(
+                    index=False, classes=["table table-bordered table-dark table-hover"]
+                ),
+                "wishes": (df.item.to_list()),
+            },
         },
     )
 
