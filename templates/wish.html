@@ -47,7 +47,11 @@ Our wish list items can be found in the table below - if you purchase something 
 
 <br>
 
-<h1>{{ chosen_item }}<h1>
+{% if chosen_item %}
+<h1>{{ chosen_item }}</h1>
+Trying to put something here
+<br>
+{% endif %}
 
 <!-- Why don't I need a </body> -->
 
@@ -67,4 +71,3 @@ Our wish list items can be found in the table below - if you purchase something 
 
 
 {% endblock %}
-
