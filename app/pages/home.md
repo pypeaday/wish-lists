@@ -22,7 +22,7 @@
 </body>
 
 <div id="myarticle">
-<h1>Welcome to Amazonot Wish Lists!</h1>
+<h1>Welcome to Amaznot Wish Lists!</h1>
 
 Amazon has pissed me off one too many times so here we are... a self-hosted wishlist registry!
 
