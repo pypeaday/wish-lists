@@ -112,6 +112,7 @@ async def add_wish(
         person=name,
         item=wish,
         link=link,
+        purchased="Not Yet",
     )
     await api.add_wish(
         wish=new_wish,
