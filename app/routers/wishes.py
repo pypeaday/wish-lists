@@ -140,7 +140,7 @@ async def get_remove_wishes(
 @router.post("/wishes/remove", response_class=HTMLResponse)
 async def remove_wish(
     request: Request,
-    id: int = Form(...),
+    key: bool = Form(...),
     db: Session = Depends(create_get_session),
 ):
     await api.delete_wish(
