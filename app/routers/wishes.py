@@ -153,11 +153,7 @@ async def remove_wish(
         context={
             "request": request,
             "data": (
-                Wishes(
-                    person="tests",
-                    item="only",
-                    link="linksy",
-                ),
+                Wishes(person="tests", item="only", link="linksy", purchased=False),
             ),
         },
     )
