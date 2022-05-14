@@ -140,7 +140,7 @@ async def get_remove_wishes(
 @router.post("/wishes/remove", response_class=HTMLResponse)
 async def remove_wish(
     request: Request,
-    key: bool = Form(...),
+    id: int = Form(...),
     db: Session = Depends(create_get_session),
 ):
     await api.delete_wish(
@@ -148,12 +148,13 @@ async def remove_wish(
         db=db,
     )
 
-    return templates.TemplateResponse(
-        "remove_wishes.html",
-        context={
-            "request": request,
-            "data": (
-                Wishes(person="tests", item="only", link="linksy", purchased=False),
-            ),
-        },
-    )
+    return RedirectResponse("/wishes", status_code=status.HTTP_302_FOUND)
+    # return templates.TemplateResponse(
+    #     "remove_wishes.html",
+    #     context={
+    #         "request": request,
+    #         "data": (
+    #             Wishes(person="tests", item="only", link="linksy", purchased=False),
+    #         ),
+    #     },
+    # )

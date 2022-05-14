@@ -35,7 +35,7 @@ Remove wishes from db.
       {% for wish in data %}
         <div class="mb-3">
             <div class="input-group-text">
-                <input name="key" class="form-check-input mt-0" id="{{ wish.id }}" type="checkbox">
+                <input name="id" class="form-check-input mt-0" value="{{ wish.id }}" type="checkbox">
                 <label for="{{ wish.id }}" class="form-label">{{ wish.person, wish.item, wish.purchased }}</label>
             </div>
         </div>
