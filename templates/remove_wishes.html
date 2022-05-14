@@ -1,0 +1,87 @@
+{% extends "base.html" %}
+{% set active_page = "remove_wishes" %}
+
+{% block title %}Wish Lists{% endblock %}
+{% block head %}
+{{ super() }}
+
+{% endblock %}
+
+{% block page_content %}
+{% include 'include/sidebar.html' %}
+
+<style>
+h1 {text-align: center;}
+body {text-align: center;}
+</style>
+
+
+<h1>Remove Wishes Here</h1>
+
+<body>
+
+<div class="form-check">
+  <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
+  <label class="form-check-label" for="flexCheckDefault">
+    Default checkbox
+  </label>
+</div>
+
+
+Remove wishes from db.
+
+<br>
+<br>
+
+<main role="main" class="container">
+
+<form class="container" method="post" name="removeWishForm">
+  <div class="form-row">
+        <table id="removeWishes" class = "form-control" name="key">
+
+            <!-- table header --> 
+            <tr>
+                <th>&nbsp;</th>
+                <th style="width:80px">Wish ID</th>
+                <th style="width:120px">Name</th>
+                <th style="width:120px">Wish</th>
+                <th style="width:120px">Purchased</th>
+            </tr>
+
+            <!-- build each row with a checkbox --> 
+            {% for row in data %}
+                    {% for col in row %}
+                        <tr>
+                            <td><input class="form-check-input" type="checkbox" value="" id={{ col.id }}/></td>
+                            <td>{{ col.id }}</td>
+                            <td>{{ col.person }}</td>
+                            <td>{{ col.item }}</td>
+                            <td>{{ col.purchased }}</td>
+                        </tr>
+                    {% endfor %}
+            {% endfor %}
+        </table>
+
+    <!-- <div class="col-auto" > -->
+    <!--     <button type="submit" class="btn btn-primary mb-2"> -->
+    <!--       Submit -->
+    <!--   </button> -->
+    <!-- </div> -->
+  <div class="col-auto">
+    <button type="submit" class="btn btn-primary mb-2" Submit </button>
+    </div>
+
+</div>
+    
+</form>
+
+</main><!-- /.container -->
+
+{% endblock %}
+
+{% block scripts %}
+{{ super() }}
+
+
+{% endblock %}
+
