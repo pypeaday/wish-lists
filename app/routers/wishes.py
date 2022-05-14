@@ -119,3 +119,44 @@ async def add_wish(
     )
 
     return RedirectResponse("/wishes", status_code=status.HTTP_302_FOUND)
+
+
+@router.get("/wishes/remove", response_class=HTMLResponse)
+async def get_remove_wishes(
+    request: Request, db: Session = Depends(create_get_session)
+):
+
+    data: List[wish_schema] = await api.read_wishes(db)
+
+    records = [
+        [d.id, d.person, d.item, d.link, d.purchased, d.purchased_by, d.date_added]
+        for d in data
+    ]
+
+    return templates.TemplateResponse(
+        "remove_wishes.html",
+        {
+            "request": request,
+            "data": records,
+        },
+    )
+
+
+@router.post("/wishes/remove", response_class=HTMLResponse)
+async def remove_wish(
+    request: Request,
+    id: int = Form(...),
+    db: Session = Depends(create_get_session),
+):
+    await api.delete_wish(
+        id=id,
+        db=db,
+    )
+
+    return templates.TemplateResponse(
+        "remove_wishes.html",
+        context={
+            "request": request,
+            "data": {},
+        },
+    )
