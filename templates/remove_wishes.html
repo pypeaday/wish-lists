@@ -31,7 +31,7 @@ body {text-align: center;}
 Remove wishes from db.
 
 <main role="main" class="container">
-  <form>
+  <form method="post">
       {% for wish in data %}
         <div class="mb-3">
             <div class="input-group-text">
@@ -40,8 +40,8 @@ Remove wishes from db.
             </div>
         </div>
       {% endfor %}
-  </form>
 <button type="submit" class="submit btn btn-xl btn-outline-danger" >Remove</button>
+  </form>
 
     <!-- <form class="container" method="post" name="removeWishForm"> -->
     <!--     <table id="removeWishes" class = "form-control table table-hover" name="key"> -->
