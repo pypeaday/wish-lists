@@ -31,33 +31,44 @@ body {text-align: center;}
 Remove wishes from db.
 
 <main role="main" class="container">
+  <form>
+      {% for wish in data %}
+        <div class="mb-3">
+            <div class="input-group-text">
+                <input class="form-check-input mt-0" id="{{ wish.id }}" type="checkbox">
+                <label for="{{ wish.id }}" class="form-label">{{ wish.person, wish.item, wish.purchased }}</label>
+            </div>
+        </div>
+      {% endfor %}
+  </form>
+<button type="submit" class="submit btn btn-xl btn-outline-danger" >Remove</button>
 
-    <form class="container" method="post" name="removeWishForm">
-        <table id="removeWishes" class = "form-control table table-hover" name="key">
+    <!-- <form class="container" method="post" name="removeWishForm"> -->
+    <!--     <table id="removeWishes" class = "form-control table table-hover" name="key"> -->
 
-            <!-- table header --> 
-            <tr name="header2" class="table-danger">
-                <th>&nbsp;</th>
-                <th style="width:120px">Wish ID</th>
-                <th style="width:120px">Name</th>
-                <th style="width:120px">Wish</th>
-                <th style="width:120px">Purchased</th>
-            </tr>
+    <!--         <!-1- table header -1-> --> 
+    <!--         <tr name="header2" class="table-danger"> -->
+    <!--             <th>&nbsp;</th> -->
+    <!--             <th style="width:120px">Wish ID</th> -->
+    <!--             <th style="width:120px">Name</th> -->
+    <!--             <th style="width:120px">Wish</th> -->
+    <!--             <th style="width:120px">Purchased</th> -->
+    <!--         </tr> -->
 
-            <!-- build each row with a checkbox --> 
-            {% for wish in data %}
-            <tr>
-                <td><input class="form-check-input" tag="tag" type="checkbox" value="" id={{ wish.id }}/></td>
-                <td>{{ wish.id }}</td>
-                <td>{{ wish.person }}</td>
-                <td>{{ wish.item }}</td>
-                <td>{{ wish.purchased }}</td>
-            </tr>
-            {% endfor %}
-        </table>
+    <!--         <!-1- build each row with a checkbox -1-> --> 
+    <!--         {% for wish in data %} -->
+    <!--         <tr> -->
+    <!--             <td><input class="form-check-input" tag="tag" type="checkbox" value="" id={{ wish.id }}/></td> -->
+    <!--             <td>{{ wish.id }}</td> -->
+    <!--             <td>{{ wish.person }}</td> -->
+    <!--             <td>{{ wish.item }}</td> -->
+    <!--             <td>{{ wish.purchased }}</td> -->
+    <!--         </tr> -->
+    <!--         {% endfor %} -->
+    <!--     </table> -->
 
-    <button type="submit" class="submit btn btn-xl btn-outline-danger" >Remove</button>
-    </form>
+    <!-- <button type="submit" class="submit btn btn-xl btn-outline-danger" >Remove</button> -->
+    <!-- </form> -->
 
 </main><!-- /.container -->
 
