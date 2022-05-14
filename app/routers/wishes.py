@@ -152,6 +152,12 @@ async def remove_wish(
         "remove_wishes.html",
         context={
             "request": request,
-            "data": {},
+            "data": (
+                Wishes(
+                    person="tests",
+                    item="only",
+                    link="linksy",
+                ),
+            ),
         },
     )
