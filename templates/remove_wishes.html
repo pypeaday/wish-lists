@@ -30,50 +30,34 @@ body {text-align: center;}
 
 Remove wishes from db.
 
-<br>
-<br>
-
 <main role="main" class="container">
 
-<form class="container" method="post" name="removeWishForm">
-  <div class="form-row">
-        <table id="removeWishes" class = "form-control" name="key">
+    <form class="container" method="post" name="removeWishForm">
+        <table id="removeWishes" class = "form-control table table-hover" name="key">
 
             <!-- table header --> 
-            <tr>
+            <tr name="header2" class="table-danger">
                 <th>&nbsp;</th>
-                <th style="width:80px">Wish ID</th>
+                <th style="width:120px">Wish ID</th>
                 <th style="width:120px">Name</th>
                 <th style="width:120px">Wish</th>
                 <th style="width:120px">Purchased</th>
             </tr>
 
             <!-- build each row with a checkbox --> 
-            {% for row in data %}
-                    {% for col in row %}
-                        <tr>
-                            <td><input class="form-check-input" type="checkbox" value="" id={{ col.id }}/></td>
-                            <td>{{ col.id }}</td>
-                            <td>{{ col.person }}</td>
-                            <td>{{ col.item }}</td>
-                            <td>{{ col.purchased }}</td>
-                        </tr>
-                    {% endfor %}
+            {% for wish in data %}
+            <tr>
+                <td><input class="form-check-input" tag="tag" type="checkbox" value="" id={{ wish.id }}/></td>
+                <td>{{ wish.id }}</td>
+                <td>{{ wish.person }}</td>
+                <td>{{ wish.item }}</td>
+                <td>{{ wish.purchased }}</td>
+            </tr>
             {% endfor %}
         </table>
 
-    <!-- <div class="col-auto" > -->
-    <!--     <button type="submit" class="btn btn-primary mb-2"> -->
-    <!--       Submit -->
-    <!--   </button> -->
-    <!-- </div> -->
-  <div class="col-auto">
-    <button type="submit" class="btn btn-primary mb-2" Submit </button>
-    </div>
-
-</div>
-    
-</form>
+    <button type="submit" class="submit btn btn-xl btn-outline-danger" >Remove</button>
+    </form>
 
 </main><!-- /.container -->
 
@@ -84,4 +68,3 @@ Remove wishes from db.
 
 
 {% endblock %}
-
