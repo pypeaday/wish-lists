@@ -128,16 +128,11 @@ async def get_remove_wishes(
 
     data: List[wish_schema] = await api.read_wishes(db)
 
-    records = [
-        [d.id, d.person, d.item, d.link, d.purchased, d.purchased_by, d.date_added]
-        for d in data
-    ]
-
     return templates.TemplateResponse(
         "remove_wishes.html",
         {
             "request": request,
-            "data": records,
+            "data": data,
         },
     )
 
