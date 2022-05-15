@@ -30,7 +30,7 @@ Remove wishes from db.
   <form method="post">
       {% for wish in data %}
         <div class="form-check ">
-            <input class="form-check-input mt-0"  name="check1" id="{{ wish.name }}" value="{{ wish.id }}" type="checkbox">
+            <input class="form-check-input mt-0"  name="wish_{{ wish.id }}" id="{{ wish.name }}" value="{{ wish.id }}" type="checkbox">
             <label class="form-check-label" for="{{ wish.id }}" > {{ wish.person }}'s wish for {{ wish.item }} </label>
         </div>
       {% endfor %}

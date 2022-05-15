@@ -3,6 +3,7 @@ from typing import List, Tuple
 import pandas as pd
 import starlette.status as status
 from fastapi import APIRouter, Depends, Form, Request
+from fastapi.encoders import jsonable_encoder
 from fastapi.responses import HTMLResponse, RedirectResponse
 from fastapi.templating import Jinja2Templates
 from sqlalchemy.orm import Session
@@ -141,13 +142,16 @@ async def get_remove_wishes(
 @router.post("/wishes/remove", response_class=HTMLResponse)
 async def remove_wish(
     request: Request,
-    id: int = Form(...),
+    # check1: int = Form(...),
     db: Session = Depends(create_get_session),
 ):
-    await api.delete_wish(
-        id=id,
-        db=db,
-    )
+    form_data = await request.form()
+    data = jsonable_encoder(form_data)
+    for k, v in data.items():
+        await api.delete_wish(
+            wish_id=v,
+            db=db,
+        )
 
     return RedirectResponse("/wishes", status_code=status.HTTP_302_FOUND)
     # return templates.TemplateResponse(
