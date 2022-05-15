@@ -48,12 +48,11 @@ async def update_wish(patch: patch_schema, db: Session = Depends(create_get_sess
 
 
 @router.delete("/api/wishes/{id}", status_code=200)
-async def delete_wish(id: int, db: Session = Depends(create_get_session)):
-    db_wish = db.query(Wishes).get(id)
+async def delete_wish(wish_id: int, db: Session = Depends(create_get_session)):
+    db_wish = db.query(Wishes).filter(Wishes.id == wish_id)
     if not db_wish:
         raise HTTPException(status_code="404", detail="Wish id does not exist")
-
-    db.delete(db_wish)
+    db_wish.delete()
     db.commit()
 
     return None
