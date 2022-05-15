@@ -21,22 +21,24 @@ body {text-align: center;}
 <body>
 
 
-
 Remove wishes from db.
 
-<main role="main" class="container">
+</body>
+
+
+
   <form method="post">
       {% for wish in data %}
-        <div class="mb-3">
-            <div class="input-group-text">
-                <input name="id" class="form-check-input mt-0" value="{{ wish.id }}" type="checkbox">
-                <label for="{{ wish.id }}" class="form-label">{{ wish.person, wish.item, wish.purchased }}</label>
-            </div>
+        <div class="form-check ">
+            <input class="form-check-input mt-0"  name="check1" id="{{ wish.name }}" value="{{ wish.id }}" type="checkbox">
+            <label class="form-check-label" for="{{ wish.id }}" > {{ wish.person }}'s wish for {{ wish.item }} </label>
         </div>
       {% endfor %}
+
 <button type="submit" class="submit btn btn-xl btn-outline-danger" >Remove</button>
   </form>
 
+<main role="main" class="container">
 
 </main><!-- /.container -->
 
