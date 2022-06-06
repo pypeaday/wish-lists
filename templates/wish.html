@@ -15,6 +15,7 @@ h1 {text-align: center;}
 body {text-align: center;}
 </style>
 
+
 <h1>Our Wishlists!</h1>
 
 <body>
@@ -23,8 +24,32 @@ Our wish list items can be found in the table below - if you purchase something 
 <br>
 <br>
 
+<h3 align="center"> Filter by Name </h3>
+
+<form class="container h-100"  action="/wishes" method="post" name="filterWishForm">
+  <div class="form-row h-100 justify-content-center align-items-center">
+    <div class="form-group col-md-4">
+      <!-- <label for="inputWish">Wish</label> -->
+      <select id="inputWish" class="form-control" name="key">
+        <option hidden selected>Filter names <option>
+            <option id="Dumbledore" value="Albus Dumbledore">Albus Dumbledore</option>
+            <option id="Dobby" value="Dobby the Elf">Dobby the Elf</option>
+            <option id="Sirius" value="Sirius Black">Sirius Black</option>
+            <option id="Hagrid" value="Rubius Hagrid">Hagrid</option>
+      </select>
+
+    </div>
+    <div class="col-auto" >
+        <button type="submit" class="btn btn-primary mb-2">
+          Submit
+      </button>
+    </div>
+  </div>
+</form>
+
 <br>
 
+<h3 align="center"> Mark Item Purchased </h3>
 <form class="container" action="/wishes" method="post" name="updateWishForm">
   <div class="form-row">
     <div class="form-group col-md-6">
@@ -60,6 +85,7 @@ Trying to put something here
 <!-- Why don't I need a </body> -->
 
 
+<h3 align="center"> Wishes </h3>
 <main role="main" class="container">
     <div class="row">
         <div class="col">
