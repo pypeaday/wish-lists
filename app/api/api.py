@@ -1,4 +1,4 @@
-from typing import List
+from typing import List, Optional
 
 from fastapi import APIRouter, Depends, HTTPException
 from sqlalchemy.orm import Session
@@ -11,9 +11,14 @@ router = APIRouter()
 
 
 @router.get("/api/wishes", response_model=List[wish_schema], status_code=200)
-async def read_wishes(db: Session = Depends(create_get_session)) -> List[wish_schema]:
+async def read_wishes(
+    db: Session = Depends(create_get_session), name: Optional[str] = None
+) -> List[wish_schema]:
     wishes = db.query(Wishes).all()
-    return wishes
+    if name is None:
+        return wishes
+    else:
+        return [wish for wish in wishes if wish.person == name]
 
 
 @router.post("/api/wishes", response_model=wish_schema, status_code=201)

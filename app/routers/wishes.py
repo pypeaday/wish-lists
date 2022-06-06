@@ -1,4 +1,4 @@
-from typing import Any, List, Tuple
+from typing import List, Optional, Tuple
 
 import pandas as pd
 import starlette.status as status
@@ -47,9 +47,13 @@ def _format_wishes(
 
 
 @router.get("/wishes", response_class=HTMLResponse)
-async def get_wishes(request: Request, db: Session = Depends(create_get_session)):
+async def get_wishes(
+    request: Request,
+    db: Session = Depends(create_get_session),
+    key: Optional[str] = None,
+):
 
-    data: List[wish_schema] = await api.read_wishes(db)
+    data: List[wish_schema] = await api.read_wishes(db, name=key)
 
     _, table = _format_wishes(data)
 

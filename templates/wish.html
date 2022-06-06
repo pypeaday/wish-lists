@@ -26,16 +26,16 @@ Our wish list items can be found in the table below - if you purchase something 
 
 <h3 align="center"> Filter by Name </h3>
 
-<form class="container h-100"  action="/wishes" method="post" name="filterWishForm">
+<form class="container h-100"  action="/wishes" method="get" name="filterWishForm">
   <div class="form-row h-100 justify-content-center align-items-center">
     <div class="form-group col-md-4">
       <!-- <label for="inputWish">Wish</label> -->
-      <select id="inputWish" class="form-control" name="key">
+      <select id="filterWish" class="form-control" name="key">
         <option hidden selected>Filter names <option>
-            <option id="Dumbledore" value="Albus Dumbledore">Albus Dumbledore</option>
-            <option id="Dobby" value="Dobby the Elf">Dobby the Elf</option>
-            <option id="Sirius" value="Sirius Black">Sirius Black</option>
-            <option id="Hagrid" value="Rubius Hagrid">Hagrid</option>
+            <option id="Albus" value="Albus">Albus Dumbledore</option>
+            <option id="Dobby" value="Dobby">Dobby the Elf</option>
+            <option id="Sirius" value="Sirius">Sirius Black</option>
+            <option id="Hagrid" value="Hagrid">Hagrid</option>
       </select>
 
     </div>
