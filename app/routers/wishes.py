@@ -119,7 +119,7 @@ async def add_wish(
         item=wish,
         link=link,
         purchased="Not Yet",
-        date_added=time.strftime("%Y-%m-%d %H:%M:%S", time.localtime()),
+        date_added=time.strftime("%a, %B %-m %Y", time.localtime()),
     )
     await api.add_wish(wish=new_wish, db=db)
 
