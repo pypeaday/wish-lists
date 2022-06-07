@@ -1,3 +1,4 @@
+import time
 from typing import List, Optional, Tuple
 
 import pandas as pd
@@ -118,11 +119,9 @@ async def add_wish(
         item=wish,
         link=link,
         purchased="Not Yet",
+        date_added=time.strftime("%Y-%m-%d %H:%M:%S", time.localtime()),
     )
-    await api.add_wish(
-        wish=new_wish,
-        db=db,
-    )
+    await api.add_wish(wish=new_wish, db=db)
 
     return RedirectResponse("/wishes", status_code=status.HTTP_302_FOUND)
 
